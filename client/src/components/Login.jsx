@@ -28,12 +28,12 @@ export default function Login() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4">
             <Search className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Image Search</h1>
-          <p className="text-gray-600">Search millions of free images with multi-select</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Image Search</h1>
+          <p className="text-sm sm:text-base text-gray-600">Search millions of free images with multi-select</p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
           <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
             Sign in to continue
           </h2>
@@ -88,7 +88,7 @@ export default function Login() {
         </div>
 
         {/* Features */}
-        <div className="mt-8 grid grid-cols-2 gap-4 text-center">
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
           <div className="bg-white/50 backdrop-blur-sm rounded-lg p-4">
             <Image className="w-6 h-6 text-blue-600 mx-auto mb-2" />
             <p className="text-sm font-medium text-gray-700">30M+ Images</p>

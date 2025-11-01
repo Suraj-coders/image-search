@@ -6,7 +6,6 @@ const { isAuthenticated } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Get top 5 searches across all users
 router.get('/top-searches', async (req, res) => {
   try {
     const topSearches = await Search.aggregate([
@@ -45,7 +44,7 @@ router.get('/top-searches', async (req, res) => {
   }
 });
 
-// Search images (authenticated route)
+
 router.post('/search', isAuthenticated, async (req, res) => {
   try {
     const { term } = req.body;
@@ -66,7 +65,7 @@ router.post('/search', isAuthenticated, async (req, res) => {
       timestamp: new Date()
     });
 
-    // Call Unsplash API
+
     const unsplashResponse = await axios.get('https://api.unsplash.com/search/photos', {
       params: {
         query: searchTerm,

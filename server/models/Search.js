@@ -1,5 +1,3 @@
-
-// server/models/Search.js
 const mongoose = require('mongoose');
 
 const searchSchema = new mongoose.Schema({
@@ -23,7 +21,7 @@ const searchSchema = new mongoose.Schema({
   }
 });
 
-// Compound index for efficient queries
+
 searchSchema.index({ userId: 1, timestamp: -1 });
 
 module.exports = mongoose.model('Search', searchSchema);

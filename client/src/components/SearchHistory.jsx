@@ -49,7 +49,7 @@ export default function SearchHistory() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 sticky top-24">
+    <div className="bg-white rounded-xl shadow-md p-6 lg:sticky lg:top-24">
       <div className="flex items-center gap-2 mb-4">
         <History className="w-5 h-5 text-blue-600" />
         <h2 className="text-lg font-semibold text-gray-900">Search History</h2>
@@ -71,7 +71,7 @@ export default function SearchHistory() {
           <p className="text-gray-400 text-xs mt-1">Your searches will appear here</p>
         </div>
       ) : (
-        <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
+        <div className="space-y-3 lg:max-h-[600px] overflow-y-auto pr-2">
           {history.map((item, index) => (
             <div
               key={index}

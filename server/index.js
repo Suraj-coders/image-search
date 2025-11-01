@@ -13,6 +13,7 @@ require('./config/passport');
 const authRoutes = require('./routes/auth');
 const searchRoutes = require('./routes/search');
 const historyRoutes = require('./routes/history');
+const imageRoutes = require('./routes/images');
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use(passport.session());
 app.use('/auth', authRoutes);
 app.use('/api', searchRoutes);
 app.use('/api', historyRoutes);
+app.use('/api/images', imageRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
