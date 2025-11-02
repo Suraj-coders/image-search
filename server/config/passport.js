@@ -36,6 +36,22 @@ passport.use(new GoogleStrategy({
       return done(null, user);
     }
     
+    // Check if user with this email already exists
+    user = await User.findOne({ email: profile.emails[0].value });
+    
+    if (user) {
+      // User exists with different provider, update with Google ID
+      user.googleId = profile.id;
+      user.name = profile.displayName;
+      if (profile.photos && profile.photos[0] && !user.avatar) {
+        user.avatar = profile.photos[0].value;
+      }
+      user.provider = 'google';
+      await user.save();
+      return done(null, user);
+    }
+    
+    // Create new user
     user = await User.create({
       googleId: profile.id,
       email: profile.emails[0].value,
@@ -69,7 +85,26 @@ passport.use(new FacebookStrategy({
       return done(null, user);
     }
     
- 
+    // Check if user with this email already exists
+    if (profile.emails && profile.emails[0]) {
+      user = await User.findOne({ email: profile.emails[0].value });
+      
+      if (user) {
+        // User exists with different provider, update with Facebook ID
+        user.facebookId = profile.id;
+        user.name = profile.displayName;
+        if (!user.avatar && profile.photos && profile.photos[0]) {
+          user.avatar = profile.photos[0].value;
+        } else if (!user.avatar && profile._json && profile._json.picture && profile._json.picture.data) {
+          user.avatar = profile._json.picture.data.url;
+        }
+        user.provider = 'facebook';
+        await user.save();
+        return done(null, user);
+      }
+    }
+    
+    // Create new user
     let avatarUrl = null;
     if (profile.photos && profile.photos[0]) {
       avatarUrl = profile.photos[0].value;
@@ -100,6 +135,7 @@ passport.use(new GitHubStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await User.findOne({ githubId: profile.id });
+  
     
     if (user) {
      
@@ -110,7 +146,24 @@ passport.use(new GitHubStrategy({
       return done(null, user);
     }
     
+    // Check if user with this email already exists
+    if (profile.emails && profile.emails[0]) {
+      user = await User.findOne({ email: profile.emails[0].value });
+      
+      if (user) {
+        // User exists with different provider, update with GitHub ID
+        user.githubId = profile.id;
+        user.name = profile.displayName || profile.username;
+        if (!user.avatar && profile._json && profile._json.avatar_url) {
+          user.avatar = profile._json.avatar_url;
+        }
+        user.provider = 'github';
+        await user.save();
+        return done(null, user);
+      }
+    }
     
+    // Create new user
     const avatarUrl = profile._json && profile._json.avatar_url ? profile._json.avatar_url : null;
     
     user = await User.create({
